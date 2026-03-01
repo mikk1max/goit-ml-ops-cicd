@@ -1,34 +1,37 @@
-# MLOps Lesson 3: Контейнеризація ML
+# 💫 MLOps CI/CD: Від Експериментів до Продакшену
 
-Цей проєкт демонструє завантаження моделі TorchScript та її запуск у контейнерах різного розміру.
+Вітаємо у головному репозиторії дисципліни **«MLOps CI/CD»**! Цей простір присвячений вивченню та впровадженню автоматизованих процесів для роботи з ML-моделями — від навчання до моніторингу в реальному часі.
 
-## Кроки для запуску
+## 🎯 Про дисципліну
 
-1. **Підготовка середовища:**
+Курс має виключно практичне спрямування. Ми проходимо шлях від ручного запуску ноутбуків до побудови повноцінної хмарної інфраструктури, де кожен крок автоматизований.
 
-   ```bash
-   chmod +x install_dev_tools.sh
-   ./install_dev_tools.sh
-   ```
+**Ключові напрямки:**
 
-2. **Експорт моделі:**
+- **IaC (Infrastructure as Code):** Створення AWS VPC та EKS через Terraform.
+- **Orchestration:** Робота з Kubernetes для масштабування сервісів.
+- **ML Lifecycle:** Логування експериментів у MLflow.
+- **CI/CD & GitOps:** Деплой через Helm та Argo CD.
+- **Observability:** Моніторинг якості моделей у Grafana.
 
-   ```bash
-   python export_model.py
-   ```
+## 🛠 Технологічний стек
 
-   (Згенерується файл model.pt)
+Ми використовуємо інструменти, що є галузевим стандартом (Industry Standard):
 
-3. **Збірка образів:**
+- **Cloud:** AWS (Amazon Web Services)
+- **Infrastructure:** Terraform
+- **Containerization:** Docker, Kubernetes (EKS)
+- **ML Ops:** MLflow, Argo Workflows
+- **GitOps:** Argo CD, Helm
+- **Monitoring:** Prometheus, Grafana
 
-   ```bash
-   docker build -t ml-fat -f Dockerfile.fat .
-   docker build -t ml-slim -f Dockerfile.slim .
-   ```
+## ⚠️ Важливі зауваження
 
-4. **Запуск (передайте будь-яке тестове зображення test.jpg):**
+- **AWS Resources:** При роботі з Terraform завжди виконуйте `terraform destroy` після завершення перевірки, щоб уникнути непередбачуваних витрат.
+- **Credentials:** Ніколи не комітьте секрети (AWS keys, passwords) у репозиторій. Використовуйте `.gitignore`.
 
-   ```bash
-   docker run --rm -v $(pwd)/test.jpg:/app/test.jpg ml-fat /app/test.jpg
-   docker run --rm -v $(pwd)/test.jpg:/app/test.jpg ml-slim /app/test.jpg
-   ```
+---
+
+_Це інженерне бачення MLOps: стабільність, відтворюваність та контроль на кожному етапі._
+
+**Успіхів у навчанні! 😎**
