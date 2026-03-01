@@ -1,0 +1,8 @@
+server:
+  service:
+    type: ClusterIP
+  extraArgs:
+    - --insecure # Вимикаємо TLS для зручного port-forwarding на локалці
+configs:
+  cm:
+    timeout.reconciliation: 180s
