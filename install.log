@@ -1,0 +1,87 @@
+2026-03-01 14:35:09 - Початок перевірки та встановлення залежностей...
+2026-03-01 14:35:09 - Docker вже встановлено: Docker version 28.5.1, build e180ab8
+2026-03-01 14:35:09 - Docker Compose вже встановлено: Docker Compose version v2.40.2-desktop.1
+2026-03-01 14:35:09 - Python3 вже встановлено: Python 3.13.7
+2026-03-01 14:35:10 - pip вже встановлено: pip 25.2 from /opt/homebrew/lib/python3.13/site-packages/pip (python 3.13)
+2026-03-01 14:35:10 - Перевірка та встановлення Python-залежностей...
+2026-03-01 14:35:10 - Python-залежності успішно встановлено.
+2026-03-01 14:35:10 - Налаштування завершено!
+2026-03-01 14:40:11 - Початок перевірки та встановлення залежностей...
+2026-03-01 14:40:11 - Docker вже встановлено: Docker version 28.5.1, build e180ab8
+2026-03-01 14:40:11 - Docker Compose вже встановлено.
+2026-03-01 14:40:11 - Python3 вже встановлено: Python 3.13.7
+2026-03-01 14:40:11 - Створення віртуального середовища та встановлення Python-залежностей...
+2026-03-01 14:40:13 - Віртуальне середовище створено у папці .venv.
+Requirement already satisfied: pip in ./.venv/lib/python3.13/site-packages (25.2)
+Collecting pip
+  Downloading pip-26.0.1-py3-none-any.whl.metadata (4.7 kB)
+Downloading pip-26.0.1-py3-none-any.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 13.4 MB/s  0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.2
+    Uninstalling pip-25.2:
+      Successfully uninstalled pip-25.2
+Successfully installed pip-26.0.1
+Collecting torch
+  Downloading torch-2.10.0-2-cp313-none-macosx_11_0_arm64.whl.metadata (31 kB)
+Collecting torchvision
+  Downloading torchvision-0.25.0-cp313-cp313-macosx_12_0_arm64.whl.metadata (5.4 kB)
+Collecting pillow
+  Downloading pillow-12.1.1-cp313-cp313-macosx_11_0_arm64.whl.metadata (8.8 kB)
+Collecting Django
+  Downloading django-6.0.2-py3-none-any.whl.metadata (3.9 kB)
+Collecting filelock (from torch)
+  Downloading filelock-3.24.3-py3-none-any.whl.metadata (2.0 kB)
+Collecting typing-extensions>=4.10.0 (from torch)
+  Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting setuptools (from torch)
+  Downloading setuptools-82.0.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting sympy>=1.13.3 (from torch)
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx>=2.5.1 (from torch)
+  Downloading networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting jinja2 (from torch)
+  Using cached jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec>=0.8.5 (from torch)
+  Downloading fsspec-2026.2.0-py3-none-any.whl.metadata (10 kB)
+Collecting numpy (from torchvision)
+  Downloading numpy-2.4.2-cp313-cp313-macosx_14_0_arm64.whl.metadata (6.6 kB)
+Collecting asgiref>=3.9.1 (from Django)
+  Downloading asgiref-3.11.1-py3-none-any.whl.metadata (9.3 kB)
+Collecting sqlparse>=0.5.0 (from Django)
+  Downloading sqlparse-0.5.5-py3-none-any.whl.metadata (4.7 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch)
+  Using cached markupsafe-3.0.3-cp313-cp313-macosx_11_0_arm64.whl.metadata (2.7 kB)
+Downloading torch-2.10.0-2-cp313-none-macosx_11_0_arm64.whl (79.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 MB 28.8 MB/s  0:00:02
+Downloading torchvision-0.25.0-cp313-cp313-macosx_12_0_arm64.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 27.5 MB/s  0:00:00
+Downloading pillow-12.1.1-cp313-cp313-macosx_11_0_arm64.whl (4.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 29.9 MB/s  0:00:00
+Downloading django-6.0.2-py3-none-any.whl (8.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.3/8.3 MB 29.2 MB/s  0:00:00
+Downloading asgiref-3.11.1-py3-none-any.whl (24 kB)
+Downloading fsspec-2026.2.0-py3-none-any.whl (202 kB)
+Downloading networkx-3.6.1-py3-none-any.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 25.1 MB/s  0:00:00
+Downloading sqlparse-0.5.5-py3-none-any.whl (46 kB)
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 30.6 MB/s  0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 19.4 MB/s  0:00:00
+Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading filelock-3.24.3-py3-none-any.whl (24 kB)
+Using cached jinja2-3.1.6-py3-none-any.whl (134 kB)
+Using cached markupsafe-3.0.3-cp313-cp313-macosx_11_0_arm64.whl (12 kB)
+Downloading numpy-2.4.2-cp313-cp313-macosx_14_0_arm64.whl (5.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.2/5.2 MB 29.5 MB/s  0:00:00
+Downloading setuptools-82.0.0-py3-none-any.whl (1.0 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 24.2 MB/s  0:00:00
+Installing collected packages: mpmath, typing-extensions, sympy, sqlparse, setuptools, pillow, numpy, networkx, MarkupSafe, fsspec, filelock, asgiref, jinja2, Django, torch, torchvision
+
+Successfully installed Django-6.0.2 MarkupSafe-3.0.3 asgiref-3.11.1 filelock-3.24.3 fsspec-2026.2.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.6.1 numpy-2.4.2 pillow-12.1.1 setuptools-82.0.0 sqlparse-0.5.5 sympy-1.14.0 torch-2.10.0 torchvision-0.25.0 typing-extensions-4.15.0
+2026-03-01 14:40:33 - Python-залежності успішно встановлено у віртуальне середовище.
+2026-03-01 14:40:33 - Налаштування завершено!
