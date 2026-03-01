@@ -1,35 +1,29 @@
-# 💫 MLOps CI/CD: Від Експериментів до Продакшену
+# AWS EKS & VPC Infrastructure (Lesson 5-6)
 
-Вітаємо у головному репозиторії дисципліни **«MLOps CI/CD»**! Цей простір присвячений вивченню та впровадженню автоматизованих процесів для роботи з ML-моделями — від навчання до моніторингу в реальному часі.
+Цей проєкт розгортає VPC та EKS кластер в AWS за допомогою офіційних Terraform модулів.
+Інфраструктура розроблена для майбутніх ML-сервісів і включає дві Node Groups (CPU та GPU workloads).
 
-## 🎯 Про дисципліну
+## Структура
 
-Курс має виключно практичне спрямування. Ми проходимо шлях від ручного запуску ноутбуків до побудови повноцінної хмарної інфраструктури, де кожен крок автоматизований.
+- `vpc/` - модуль створення мережі (NAT, публічні/приватні сабнети).
+- `eks/` - модуль створення кластера Kubernetes.
+- `main.tf` (корінь) - викликає обидва модулі та передає залежності.
 
-**Ключові напрямки:**
+## Інструкція з розгортання
 
-- **IaC (Infrastructure as Code):** Створення AWS VPC та EKS через Terraform.
-- **Orchestration:** Робота з Kubernetes для масштабування сервісів.
-- **ML Lifecycle:** Логування експериментів у MLflow.
-- **CI/CD & GitOps:** Деплой через Helm та Argo CD.
-- **Observability:** Моніторинг якості моделей у Grafana.
+1. Авторизуйтесь в AWS (`aws configure`).
+2. Ініціалізуйте Terraform:
+   `terraform init`
+3. Перегляньте план ресурсів:
+   `terraform plan`
+4. Застосуйте зміни (створення займає ~15-20 хвилин):
+   `terraform apply -auto-approve`
+5. Підключіться до кластера:
+   `aws eks --region eu-central-1 update-kubeconfig --name ml-production-cluster`
+6. Перевірте ноди:
+   `kubectl get nodes`
 
-## 🛠 Технологічний стек
+## ⚠️ Знищення ресурсів
 
-Ми використовуємо інструменти, що є галузевим стандартом (Industry Standard):
-
-- **Cloud:** AWS (Amazon Web Services)
-- **Infrastructure:** Terraform
-- **Containerization:** Docker, Kubernetes (EKS)
-- **ML Ops:** MLflow, Argo Workflows
-- **GitOps:** Argo CD, Helm
-- **Monitoring:** Prometheus, Grafana
-
-## ⚠️ Важливі зауваження
-
-- **AWS Resources:** При роботі з Terraform завжди виконуйте `terraform destroy` після завершення перевірки, щоб уникнути непередбачуваних витрат.
-- **Credentials:** Ніколи не комітьте секрети (AWS keys, passwords) у репозиторій. Використовуйте `.gitignore`.
-
----
-
-_Це інженерне бачення MLOps: стабільність, відтворюваність та контроль на кожному етапі._
+Щоб уникнути зайвих витрат, обов'язково видаліть ресурси після тестування:
+`terraform destroy -auto-approve`
