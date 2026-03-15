@@ -60,3 +60,4 @@ terraform apply -auto-approve
 - AWS_DEFAULT_REGION: Ваш регіон (наприклад, eu-central-1).
 
 - STEP_FUNCTION_ARN: ARN вашої Step Function, який видав Terraform.
+ 
