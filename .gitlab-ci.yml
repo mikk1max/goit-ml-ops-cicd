@@ -7,9 +7,7 @@ train-model:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push"'
   script:
-    - echo "Starting AWS Step Function for ML Training..."
-    - >
-      aws stepfunctions start-execution 
-      --state-machine-arn $STEP_FUNCTION_ARN 
-      --name "train-$(date +%s)" 
-      --input '{"source":"gitlab-ci", "commit":"'"$CI_COMMIT_SHORT_SHA"'"}'
+    - echo "Sprawdzam zmienne..."
+    - echo "ARN to -> $STEP_FUNCTION_ARN"
+    - echo "Uruchamiam AWS Step Function dla ML Training..."
+    - aws stepfunctions start-execution --state-machine-arn $STEP_FUNCTION_ARN --name "train-$(date +%s)" --input "{\"source\":\"gitlab-ci\", \"commit\":\"$CI_COMMIT_SHORT_SHA\"}"
