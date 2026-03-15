@@ -1,35 +1,66 @@
-# 💫 MLOps CI/CD: Від Експериментів до Продакшену
+# MLOps Experiments Tracking & Local Infrastructure
 
-Вітаємо у головному репозиторії дисципліни **«MLOps CI/CD»**! Цей простір присвячений вивченню та впровадженню автоматизованих процесів для роботи з ML-моделями — від навчання до моніторингу в реальному часі.
+Цей проєкт демонструє повноцінний процес MLOps: декларативне розгортання інфраструктури, трекінг експериментів, логування моделей та моніторинг метрик. Проєкт було успішно адаптовано для роботи в локальному Kubernetes кластері (Docker Desktop) через обмеження ресурсів у хмарних безкоштовних тарифах[cite: 1, 2, 3].
 
-## 🎯 Про дисципліну
+## 🏗️ Архітектура проєкту
 
-Курс має виключно практичне спрямування. Ми проходимо шлях від ручного запуску ноутбуків до побудови повноцінної хмарної інфраструктури, де кожен крок автоматизований.
+Проєкт базується на концепції GitOps та використовує наступний стек:
 
-**Ключові напрямки:**
-
-- **IaC (Infrastructure as Code):** Створення AWS VPC та EKS через Terraform.
-- **Orchestration:** Робота з Kubernetes для масштабування сервісів.
-- **ML Lifecycle:** Логування експериментів у MLflow.
-- **CI/CD & GitOps:** Деплой через Helm та Argo CD.
-- **Observability:** Моніторинг якості моделей у Grafana.
-
-## 🛠 Технологічний стек
-
-Ми використовуємо інструменти, що є галузевим стандартом (Industry Standard):
-
-- **Cloud:** AWS (Amazon Web Services)
-- **Infrastructure:** Terraform
-- **Containerization:** Docker, Kubernetes (EKS)
-- **ML Ops:** MLflow, Argo Workflows
-- **GitOps:** Argo CD, Helm
-- **Monitoring:** Prometheus, Grafana
-
-## ⚠️ Важливі зауваження
-
-- **AWS Resources:** При роботі з Terraform завжди виконуйте `terraform destroy` після завершення перевірки, щоб уникнути непередбачуваних витрат.
-- **Credentials:** Ніколи не комітьте секрети (AWS keys, passwords) у репозиторій. Використовуйте `.gitignore`.
+- **Infrastructure**: AWS EKS (через Terraform) або Docker Desktop (Kubernetes)[cite: 1, 2, 3, 4, 5, 6].
+- **GitOps**: ArgoCD для автоматичного розгортання та синхронізації компонентів.
+- **Storage**: MinIO (S3-сумісне сховище) для артефактів та PostgreSQL для метаданих.
+- **Tracking**: MLflow для ведення логів експериментів та версіонування моделей.
+- **Monitoring**: Prometheus Pushgateway для збору метрик навчання (accuracy, loss).
 
 ---
 
-_Це інженерне бачення MLOps: стабільність, відтворюваність та контроль на кожному етапі._
+## 🚀 Як запустити проєкт (Local Dev Mode)
+
+Для стабільної роботи на Docker Desktop було використано кастомні маніфести для обходу помилок завантаження образів Bitnami.
+
+### 1. Підготовка Kubernetes
+
+Переконайтеся, що Kubernetes увімкнено у налаштуваннях Docker Desktop. Застосуйте маніфести інфраструктури:
+
+```bash
+kubectl apply -f argocd/applications/
+# Для виправлення помилок ErrImagePull застосовано патч:
+kubectl apply -f fix-infra.yaml
+```
+
+### 2. Налаштування Port-Forward (Тунелі)
+
+Щоб Python-скрипт міг спілкуватися з сервісами, відкрийте окремі термінали для кожного тунелю:
+
+- MinIO: `kubectl port-forward svc/minio-new 9000:9000`
+- Postgres: `kubectl port-forward svc/postgres-new 5432:5432`
+- Pushgateway: `kubectl port-forward svc/pushgateway-prometheus-pushgateway 9091:9091 -n monitoring`
+
+### 3. Запуск навчання моделей
+
+Скрипт проведе 3 експерименти з різними гіперпараметрами для датасету Iris.Bashcd experiments
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python train_and_push.py
+```
+
+### 📊 Результати виконання
+
+1. Збереження моделі: Найкраща за точністю модель автоматично завантажується з MinIO та зберігається локально в папку `best_model/`.
+2. Метрики у Pushgateway: Результати `mlflow_accuracy` та `mlflow_loss` доступні за адресою `http://localhost:9091`.
+3. MLflow Tracking: Експерименти логуються у локальну базу` mlflow.db` та відображаються у логах скрипта.
+
+### 📂 Структура репозиторію
+
+`eks/` — Terraform конфігурації для розгортання AWS EKS.
+`argocd/applications/` — Декларативні маніфести ArgoCD для MinIO, MLflow, Postgres та Pushgateway.
+`experiments/` — Python код для навчання, логування та відправки метрик.
+`best_model/` — Серіалізована найкраща модель (результат останнього запуску).
+`fix-infra.yaml` — Кастомні маніфести для стабільної роботи в локальному Kubernetes.
+
+### ⚠️ Очищення ресурсів
+
+Якщо ви використовували AWS, не забудьте видалити ресурси, щоб уникнути зайвих витрат:

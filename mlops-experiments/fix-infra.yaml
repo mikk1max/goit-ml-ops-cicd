@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-new
+  namespace: default
+spec:
+  serviceName: "postgres-new"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-new
+  template:
+    metadata:
+      labels:
+        app: postgres-new
+    spec:
+      containers:
+        - name: postgresql
+          image: postgres:15
+          env:
+            - name: POSTGRES_DB
+              value: mlflow
+            - name: POSTGRES_PASSWORD
+              value: password123
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-new
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio-new
+  template:
+    metadata:
+      labels:
+        app: minio-new
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio:latest
+          args: ["server", "/data"]
+          env:
+            - name: MINIO_ROOT_USER
+              value: minioadmin
+            - name: MINIO_ROOT_PASSWORD
+              value: minioadmin
