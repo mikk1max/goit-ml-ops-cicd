@@ -1,0 +1,19 @@
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude sensitive vars if you create them
+*.tfvars
+*.tfvars.json
+
+# Exclude local provider configurations
+.terraform.lock.hcl
+
+**/venv/
