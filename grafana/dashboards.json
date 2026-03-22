@@ -1,0 +1,29 @@
+{
+  "title": "AIOps Inference Metrics",
+  "panels": [
+    {
+      "title": "Total Requests per Minute",
+      "type": "timeseries",
+      "targets": [
+        { "expr": "rate(inference_requests_total[1m])", "refId": "A" }
+      ]
+    },
+    {
+      "title": "Drift Detections",
+      "type": "stat",
+      "targets": [
+        { "expr": "increase(drift_detected_total[5m])", "refId": "A" }
+      ]
+    },
+    {
+      "title": "Latency",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "rate(inference_request_latency_seconds_sum[1m]) / rate(inference_request_latency_seconds_count[1m])",
+          "refId": "A"
+        }
+      ]
+    }
+  ]
+}

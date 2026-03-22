@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aiops-inference-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://gitlab.com/your-username/aiops-quality-project.git"
+    targetRevision: HEAD
+    path: helm
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,13 @@
+replicaCount: 1
+
+image:
+  repository: my-registry.com/aiops-inference
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 8000
+
+environment:
+  MODEL_VERSION: "v1.0"

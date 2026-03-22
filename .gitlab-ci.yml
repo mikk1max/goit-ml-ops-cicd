@@ -1,0 +1,37 @@
+stages:
+  - retrain
+  - build
+  - update-helm
+
+variables:
+  IMAGE_TAG: $CI_PIPELINE_IID
+
+retrain-model:
+  stage: retrain
+  image: python:3.9
+  script:
+    - echo "Запуск перенавчання моделі через дрейф даних..."
+    - pip install -r app/requirements.txt
+    - python model/train.py
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "trigger" || $CI_PIPELINE_SOURCE == "web"'
+
+build-image:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - docker build -t my-registry.com/aiops-inference:$IMAGE_TAG ./app
+    - docker push my-registry.com/aiops-inference:$IMAGE_TAG
+
+update-helm-redeploy:
+  stage: update-helm
+  image: alpine/git
+  script:
+    - echo "Оновлення Helm-чарту новою версією образу..."
+    - sed -i "s/tag:.*/tag:\ $IMAGE_TAG/g" helm/values.yaml
+    - git config --global user.email "ci@gitlab.com"
+    - git config --global user.name "GitLab CI"
+    - git commit -am "Update image tag to $IMAGE_TAG [skip ci]"
+    - git push origin main
