@@ -22,8 +22,9 @@ build-image:
   services:
     - docker:20.10.16-dind
   script:
-    - docker build -t my-registry.com/aiops-inference:$IMAGE_TAG ./app
-    - docker push my-registry.com/aiops-inference:$IMAGE_TAG
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:$IMAGE_TAG ./app
+    - docker push $CI_REGISTRY_IMAGE:$IMAGE_TAG
 
 update-helm-redeploy:
   stage: update-helm
